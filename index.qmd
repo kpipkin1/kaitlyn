@@ -1,6 +1,4 @@
 ---
-title: "Kaitlyn_Pipkin"
----
 title: "Kaitlyn Pipkin"
 toc: false
 about:
