@@ -1,7 +1,23 @@
 ---
 title: "Kaitlyn_Pipkin"
 ---
+title: "Kaitlyn Pipkin"
+toc: false
+about:
+  template: trestles
+  links:
+    - text: GitHub
+      href: link
+    - text: Email
+      href: link
+---
 
-This is a Quarto website.
+::: {.column-page}
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Bio
+
+## Research Goals
+
+## Experience
+
+:::

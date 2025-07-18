@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Kaitlyn_Pipkin",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "title: “Kaitlyn Pipkin” toc: false about: template: trestles links: - text: GitHub href: link - text: Email href: link"
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,26 @@
     "title": "About",
     "section": "",
     "text": "About this site"
+  },
+  {
+    "objectID": "index.html#bio",
+    "href": "index.html#bio",
+    "title": "Kaitlyn_Pipkin",
+    "section": "Bio",
+    "text": "Bio"
+  },
+  {
+    "objectID": "index.html#research-goals",
+    "href": "index.html#research-goals",
+    "title": "Kaitlyn_Pipkin",
+    "section": "Research Goals",
+    "text": "Research Goals"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Kaitlyn_Pipkin",
+    "section": "Experience",
+    "text": "Experience"
   }
 ]
