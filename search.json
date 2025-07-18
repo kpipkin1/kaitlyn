@@ -12,33 +12,5 @@
     "title": "About",
     "section": "",
     "text": "About this site"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Kaitlyn_Pipkin",
-    "section": "",
-    "text": "title: “Kaitlyn Pipkin” toc: false about: template: trestles links: - text: GitHub href: link - text: Email href: link —"
-  },
-  {
-    "objectID": "index.html#bio",
-    "href": "index.html#bio",
-    "title": "Kaitlyn_Pipkin",
-    "section": "Bio",
-    "text": "Bio"
-  },
-  {
-    "objectID": "index.html#research-goals",
-    "href": "index.html#research-goals",
-    "title": "Kaitlyn_Pipkin",
-    "section": "Research Goals",
-    "text": "Research Goals"
-  },
-  {
-    "objectID": "index.html#experience",
-    "href": "index.html#experience",
-    "title": "Kaitlyn_Pipkin",
-    "section": "Experience",
-    "text": "Experience"
   }
 ]
