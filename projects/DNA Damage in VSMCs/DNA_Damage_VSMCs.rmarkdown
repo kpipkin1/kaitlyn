@@ -6,7 +6,11 @@ editor:
     wrap: 72
 ---
 
+
+
 # Set the working directory
+
+
 
 ```{r}
 #setwd("C:/Users/kpipkin1/Documents/GitHub/kaitlyn/projects/DNA Damage in VSMCs")
@@ -14,7 +18,11 @@ editor:
 
 ```
 
+
+
 # #Load the necessary libraries
+
+
 
 ```{r}
 library(tidyverse) 
@@ -25,13 +33,21 @@ library(ggpubr)
 
 ```
 
+
+
 # #Read in all of the CSV files
+
+
 
 ```{r}
 file_paths <- list.files(pattern = "\\.csv$", full.names = TRUE)
 ```
 
+
+
 # #Read all of the data into 1 tibble
+
+
 
 ```{r}
 #| message: false
@@ -42,7 +58,11 @@ all_data<-file_paths %>%
 
 ```
 
+
+
 # #Add Columns and define base_name to help join
+
+
 
 ```{r}
 all_data <- all_data %>%
@@ -69,7 +89,11 @@ all_data <- all_data %>%
 
 ```
 
+
+
 # #Separate Blue and Green columns and join based on day and dosage
+
+
 
 ```{r}
 blue <- all_data %>%
@@ -84,14 +108,22 @@ green <- all_data %>%
 
 ```
 
+
+
 # #Join green and blue channel images together
+
+
 
 ```{r}
 combined <- inner_join(blue, green, by = "base_name")
 
 ```
 
+
+
 # #Calculate the percent of green area (yH2AX) normalized to the blue area (DAPI)
+
+
 
 ```{r}
 combined <- combined %>%
@@ -99,7 +131,11 @@ combined <- combined %>%
 
 ```
 
+
+
 # #Clean data and get rid of points that do not match, and any NA or missing values
+
+
 
 ```{r}
 combined <- combined %>%
@@ -111,7 +147,11 @@ combined <- combined %>%
   droplevels()
 ```
 
+
+
 # #Pick colors for the plot
+
+
 
 ```{r}
 box_fill <- c(
@@ -122,10 +162,14 @@ box_fill <- c(
 )
 ```
 
+
+
 ```{}
 ```
 
-# Generate a combined plot with each timepoint separated by color, dosage on X axis and percent of coverage (yH2AX/DAPI) on the y axis
+# #Generate a combined plot with each timepoint separated by color, dosage on X axis and percent of coverage (yH2AX/DAPI) on the y axis
+
+
 
 ```{r}
 ggplot(combined, aes(x = dosage, y = percent_gammaH2AX, fill = day)) +
@@ -146,7 +190,11 @@ ggplot(combined, aes(x = dosage, y = percent_gammaH2AX, fill = day)) +
 
 ```
 
+
+
 # Plot the individual days separately to access DNA damage by dosage more clearly
+
+
 
 ```{r}
 plot_day <- function(day_label) {
@@ -170,3 +218,4 @@ plot_day("7d")
 plot_day("11d")
 
 ```
+
