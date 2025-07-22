@@ -1,0 +1,6 @@
+"0","#| message: false"
+"0",""
+"0","all_data<-file_paths %>%"
+"0","  set_names() %>%"
+"0","  map_dfr(read_csv, .id = ""filename"")"
+"0",""
