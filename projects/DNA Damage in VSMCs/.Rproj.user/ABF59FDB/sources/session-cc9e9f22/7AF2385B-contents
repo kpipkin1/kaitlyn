@@ -21,7 +21,6 @@ library(tidyverse)
 library(readr) 
 library(ggplot2) 
 library(stringr) 
-library(ggpubr)
 
 ```
 
@@ -122,8 +121,6 @@ box_fill <- c(
 )
 ```
 
-```{}
-```
 
 # Generate a combined plot with each timepoint separated by color, dosage on X axis and percent of coverage (yH2AX/DAPI) on the y axis
 

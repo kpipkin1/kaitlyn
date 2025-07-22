@@ -31,8 +31,7 @@ jobs:
             any::lme4
             any::lmerTest
             any::psycModel
-            any::ggpubr
-            
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
