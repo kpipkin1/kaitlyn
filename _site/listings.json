@@ -1,6 +1,9 @@
 [
   {
     "listing": "/projects.html",
-    "items": []
+    "items": [
+      "/projects/Accessing DNA Damage.html",
+      "/projects/DNA Damage in VSMCs/DNA_Damage_VSMCs.html"
+    ]
   }
 ]
