@@ -1,7 +1,0 @@
-"0","combined <- combined %>%"
-"0","  filter(!is.na(dosage), !is.na(percent_gammaH2AX), !is.na(day)) %>%"
-"0","  mutate("
-"0","    dosage = factor(dosage, levels = c(""0uM"", ""0.1uM"", ""0.2uM"", ""0.4uM"")),"
-"0","    day = factor(day, levels = c(""3d"", ""4d"", ""7d"", ""11d""))"
-"0","  ) %>%"
-"0","  droplevels()"

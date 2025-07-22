@@ -10,8 +10,6 @@ editor:
 
 ```{r}
 #setwd("C:/Users/kpipkin1/Documents/GitHub/kaitlyn/projects/DNA Damage in VSMCs")
-
-
 ```
 
 # #Load the necessary libraries
