@@ -1,0 +1,172 @@
+---
+title: "DNA Damage in VSMCs"
+author: "Kaitlyn Pipkin"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Set the working directory
+
+```{r}
+setwd("C:/Users/kpipkin1/Documents/GitHub/kaitlyn/projects/DNA Damage in VSMCs")
+
+
+```
+
+# #Load the necessary libraries
+
+```{r}
+library(tidyverse) 
+library(readr) 
+library(ggplot2) 
+library(stringr) 
+library(ggpubr)
+
+```
+
+# #Read in all of the CSV files
+
+```{r}
+file_paths <- list.files(pattern = "\\.csv$", full.names = TRUE)
+```
+
+# #Read all of the data into 1 tibble
+
+```{r}
+#| message: false
+
+all_data<-file_paths %>%
+  set_names() %>%
+  map_dfr(read_csv, .id = "filename")
+
+```
+
+# #Add Columns and define base_name to help join
+
+```{r}
+all_data <- all_data %>%
+  mutate(
+    base_name = filename %>%
+      basename() %>%
+      str_remove(" \\(blue\\)| \\(green\\)") %>%
+      str_remove("-summary\\.csv$"),
+    day = str_extract(filename, "\\d+d"),
+    dosage = case_when(
+      str_detect(filename, "0\\.1uM") ~ "0.1uM",
+      str_detect(filename, "0\\.2uM") ~ "0.2uM",
+      str_detect(filename, "0\\.4uM") ~ "0.4uM",
+      str_detect(filename, "no doxo") ~ "0uM",
+      TRUE ~ NA_character_
+    ),
+    channel = case_when(
+      str_detect(filename, "blue") ~ "blue",
+      str_detect(filename, "green") ~ "green",
+      TRUE ~ NA_character_
+    )
+  )
+
+
+```
+
+# #Separate Blue and Green columns and join based on day and dosage
+
+```{r}
+blue <- all_data %>%
+  filter(channel == "blue") %>%
+  select(base_name, day, dosage, Count, `Total Area`, `Average Size`, `%Area`, Mean) %>%
+  rename_with(~ paste0(., "_blue"), -c(base_name, day, dosage))
+
+green <- all_data %>%
+  filter(channel == "green") %>%
+  select(base_name, Count, `Total Area`, `Average Size`, `%Area`, Mean) %>%
+  rename_with(~ paste0(., "_green"), -base_name)
+
+```
+
+# #Join green and blue channel images together
+
+```{r}
+combined <- inner_join(blue, green, by = "base_name")
+
+```
+
+# #Calculate the percent of green area (yH2AX) normalized to the blue area (DAPI)
+
+```{r}
+combined <- combined %>%
+  mutate(percent_gammaH2AX = (`%Area_green` / `%Area_blue`) * 100)
+
+```
+
+# #Clean data and get rid of points that do not match, and any NA or missing values
+
+```{r}
+combined <- combined %>%
+  filter(!is.na(dosage), !is.na(percent_gammaH2AX), !is.na(day)) %>%
+  mutate(
+    dosage = factor(dosage, levels = c("0uM", "0.1uM", "0.2uM", "0.4uM")),
+    day = factor(day, levels = c("3d", "4d", "7d", "11d"))
+  ) %>%
+  droplevels()
+```
+
+# #Pick colors for the plot
+
+```{r}
+box_fill <- c(
+  "3d" = "#66c2a5",  # green
+  "4d" = "#fc8d62",  # orange
+  "7d" = "#8da0cb",  # blue
+  "11d" = "#e78ac3"  # pink
+)
+```
+
+```{}
+```
+
+# #Generate a combined plot with each timepoint separated by color, dosage on X axis and percent of coverage (yH2AX/DAPI) on the y axis
+
+```{r}
+ggplot(combined, aes(x = dosage, y = percent_gammaH2AX, fill = day)) +
+  geom_boxplot(position = position_dodge(width = 0.8), alpha = 0.4, width = 0.4, outlier.shape = NA) +
+  geom_jitter(aes(color = day), 
+              position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.8), 
+              size = 2, alpha = 0.8) +
+  scale_fill_manual(values = box_fill) +
+  scale_color_manual(values = box_fill) +
+  labs(
+    title = "Assessing Dose- and Time-Dependent DNA Damage in VSMCs Following Doxorubicin Treatment",
+    x = "Doxorubicin Dose",
+    y = "% γH2AX / % DAPI",
+    fill = "Day",
+    color = "Day"
+  ) +
+  theme_minimal()
+
+```
+
+# #Plot the individual days separately to access DNA damage by dosage more clearly
+
+```{r}
+plot_day <- function(day_label) {
+  combined %>%
+    filter(day == day_label) %>%
+    ggplot(aes(x = dosage, y = percent_gammaH2AX)) +
+    geom_boxplot(fill = box_fill[day_label], alpha = 0.4, width = 0.3, outlier.shape = NA) +
+    geom_jitter(color = box_fill[day_label], width = 0.15, size = 2, alpha = 0.8) +
+    labs(
+      title = paste("Dose-Dependent DNA Damage in VSMCs on", day_label),
+      x = "Doxorubicin Dose",
+      y = "% γH2AX / % DAPI"
+    ) +
+    theme_minimal()
+}
+
+# Usage:
+plot_day("3d")
+plot_day("4d")
+plot_day("7d")
+plot_day("11d")
+
+```
