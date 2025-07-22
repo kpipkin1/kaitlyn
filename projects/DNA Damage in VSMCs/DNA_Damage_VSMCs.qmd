@@ -12,9 +12,11 @@ editor:
 #setwd("C:/Users/kpipkin1/Documents/GitHub/kaitlyn/projects/DNA Damage in VSMCs")
 ```
 
-# #Load the necessary libraries
+# Load the necessary libraries
 
 ```{r}
+#| message: false
+
 library(tidyverse) 
 library(readr) 
 library(ggplot2) 
@@ -22,13 +24,13 @@ library(stringr)
 
 ```
 
-# #Read in all of the CSV files
+# Read in all of the CSV files
 
 ```{r}
 file_paths <- list.files(pattern = "\\.csv$", full.names = TRUE)
 ```
 
-# #Read all of the data into 1 tibble
+# Read all of the data into 1 tibble
 
 ```{r}
 #| message: false
@@ -39,7 +41,11 @@ all_data<-file_paths %>%
 
 ```
 
-# #Add Columns and define base_name to help join
+# Add Columns and define base_name to help join
+## header 2
+### header 3
+
+Sample text 
 
 ```{r}
 all_data <- all_data %>%
@@ -66,7 +72,7 @@ all_data <- all_data %>%
 
 ```
 
-# #Separate Blue and Green columns and join based on day and dosage
+# Separate Blue and Green columns and join based on day and dosage
 
 ```{r}
 blue <- all_data %>%
@@ -81,14 +87,14 @@ green <- all_data %>%
 
 ```
 
-# #Join green and blue channel images together
+# Join green and blue channel images together
 
 ```{r}
 combined <- inner_join(blue, green, by = "base_name")
 
 ```
 
-# #Calculate the percent of green area (yH2AX) normalized to the blue area (DAPI)
+# Calculate the percent of green area (yH2AX) normalized to the blue area (DAPI)
 
 ```{r}
 combined <- combined %>%
@@ -96,7 +102,7 @@ combined <- combined %>%
 
 ```
 
-# #Clean data and get rid of points that do not match, and any NA or missing values
+# Clean data and get rid of points that do not match, and any NA or missing values
 
 ```{r}
 combined <- combined %>%
@@ -108,7 +114,7 @@ combined <- combined %>%
   droplevels()
 ```
 
-# #Pick colors for the plot
+# Pick colors for the plot
 
 ```{r}
 box_fill <- c(
