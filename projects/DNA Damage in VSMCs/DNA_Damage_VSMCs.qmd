@@ -24,13 +24,13 @@ library(stringr)
 
 ```
 
-# Read in all of the CSV files
+# Read in all of the CSV Files
 
 ```{r}
 file_paths <- list.files(pattern = "\\.csv$", full.names = TRUE)
 ```
-
-# Read all of the data into 1 tibble
+My variable here is "file_paths". This variable will contain a list of file names that I have stored in my current working directory. The "list.files" function searches for files in that current working directory. The "pattern=(2 back slashes).csv$" argument will allow for only the files that end in ".csv" to be included in my "file_paths" variable. This is because in regular expressions, a period means "any character" so we have to escape that with 2 backslashes to match to a period. Because the filename ends after csv, I use a dollar sign at the end of the pattern to indicate that csv is the end of the string so it will only pull files that end in .csv, not just a file that contains .csv. I use the "full.names=TRUE" peice to return the entire file path instead of just the file name itself. 
+# Read all of the .csv Files into one Dataset
 
 ```{r}
 #| message: false
@@ -40,12 +40,9 @@ all_data<-file_paths %>%
   map_dfr(read_csv, .id = "filename")
 
 ```
+My new variable here is "all_data", which is where all of my file_paths are combined into one big data set. The file_paths%>% will start with the list of the .csv file paths and allow them to be piped in the next function, "set_names()". This allows R to know which row came from which file. The "map_dfr(read_csv,.id=filename)" Makes R read each csv file in the list and combine all of the files together into one data frame. In addition, R then adds a new column to the big data frame called "filename".  
 
-# Add Columns and define base_name to help join
-## header 2
-### header 3
-
-Sample text 
+# Use File Names to Pull Metadata
 
 ```{r}
 all_data <- all_data %>%
@@ -72,7 +69,9 @@ all_data <- all_data %>%
 
 ```
 
-# Separate Blue and Green columns and join based on day and dosage
+The "mutate()" function adds new columns to the big dataset by extracting the information from the filename column. The basename column uses only the dosage, sample ID, and timepoint to help join files together later. The timepoint is extracted from the filename and matches to patterns listed in the file name which in this case is "11d" for example. By using "case_when()" you can add a column for dosage by finding patterns like "0.1uM" or "no doxo" and defining what they mean. The channel column is based on the fluorescence color also pulled from the filename. 
+
+# Separate the Dataset into Blue and Green Channels
 
 ```{r}
 blue <- all_data %>%
@@ -87,14 +86,18 @@ green <- all_data %>%
 
 ```
 
-# Join green and blue channel images together
+This code split my dataset into two tables: one with images from the blue channel and one with images from the green channel. Then I rename the measurment columns with the appropriate channel name to help join them later.  
+
+# Join Green and Blue Channel Images Together
 
 ```{r}
 combined <- inner_join(blue, green, by = "base_name")
 
 ```
 
-# Calculate the percent of green area (yH2AX) normalized to the blue area (DAPI)
+The "inner_join" function merges the blue and green data tables together based on their basename, which includes the dosage, timepoint, and sample ID. The joining of these two datasets is a new varibale called "combined".
+
+# Calculate the Percent of Green area (yH2AX) normalized to the Blue area (DAPI)
 
 ```{r}
 combined <- combined %>%
@@ -102,7 +105,9 @@ combined <- combined %>%
 
 ```
 
-# Clean data and get rid of points that do not match, and any NA or missing values
+Here, I add a new column called "percent_gammaH2AX to the "combined" dataset using the "mutate()" function. This column will divide the precent of the green area (the yH2AX signal, which measures DNA damage) by the percent of the blue area (DAPI signal, which measures the total nuclei). I then multiply this by 100 to get a percentage which gives me the normalized value that gives me the percent of DNA damage relative to the number of cells.  
+
+# Clean Data
 
 ```{r}
 combined <- combined %>%
@@ -114,7 +119,9 @@ combined <- combined %>%
   droplevels()
 ```
 
-# Pick colors for the plot
+In this step I remove any rows that do not have dosage, percent_gammaH2AX, or timepoints using "filter()". Next, "mutate()" is used to convert the dosage and day columns into categorical variables and set them in ascending order. "droplevels" is then used to remove any dosage or day lables that were no longer used in my new filtered dataset. 
+
+# Pick Colors for the Plot
 
 ```{r}
 box_fill <- c(
@@ -125,8 +132,9 @@ box_fill <- c(
 )
 ```
 
+Here I made a variable called "box_fil" where each day is assigned to a specific color using the "c()" function.
 
-# Generate a combined plot with each timepoint separated by color, dosage on X axis and percent of coverage (yH2AX/DAPI) on the y axis
+# Generate a Combined Plot looking at the Percent of DNA Damage Across Dosage of Doxorubicin
 
 ```{r}
 ggplot(combined, aes(x = dosage, y = percent_gammaH2AX, fill = day)) +
@@ -147,7 +155,9 @@ ggplot(combined, aes(x = dosage, y = percent_gammaH2AX, fill = day)) +
 
 ```
 
-# Plot the individual days separately to access DNA damage by dosage more clearly
+In this step, I am ready to graph. The "ggplot()" function creates a box plot. The "aes()" function maps dosage to the x axis and percent_gammaH2AX to the y axis and the boxes are filled based on their corresponding "box_fill" color. The "geom_boxplot()" function shoes the distribution f the values in each group and "geom_jitter() allows me to add the individual values. To make the individual points a darker color than their corresponding box_fill, I use "scale_fill_manual()" and "scale_color_manual()". "labs()" allows me to name my title and axis lables. I used the "theme_minimal()"function to keep the plot clean and simple. 
+
+# Plot by the Individual Days Separately 
 
 ```{r}
 plot_day <- function(day_label) {
@@ -164,10 +174,12 @@ plot_day <- function(day_label) {
     theme_minimal()
 }
 
-# Usage:
+
 plot_day("3d")
 plot_day("4d")
 plot_day("7d")
 plot_day("11d")
 
 ```
+
+In this final step, I wrote a funciton called "plot_day()". I then use the argument, "day_label" to create a boxplot showing DNA damage across Doxorubicin treatments on that specific day. this filters the combined dataset to only include rows matching the day.
