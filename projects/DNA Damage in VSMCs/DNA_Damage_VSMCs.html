@@ -147,22 +147,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#set-the-working-directory" id="toc-set-the-working-directory" class="nav-link active" data-scroll-target="#set-the-working-directory">Set the working directory</a></li>
   <li><a href="#load-the-necessary-libraries" id="toc-load-the-necessary-libraries" class="nav-link" data-scroll-target="#load-the-necessary-libraries">Load the necessary libraries</a></li>
-  <li><a href="#read-in-all-of-the-csv-files" id="toc-read-in-all-of-the-csv-files" class="nav-link" data-scroll-target="#read-in-all-of-the-csv-files">Read in all of the CSV files</a></li>
-  <li><a href="#read-all-of-the-data-into-1-tibble" id="toc-read-all-of-the-data-into-1-tibble" class="nav-link" data-scroll-target="#read-all-of-the-data-into-1-tibble">Read all of the data into 1 tibble</a></li>
-  <li><a href="#add-columns-and-define-base_name-to-help-join" id="toc-add-columns-and-define-base_name-to-help-join" class="nav-link" data-scroll-target="#add-columns-and-define-base_name-to-help-join">Add Columns and define base_name to help join</a>
-  <ul class="collapse">
-  <li><a href="#header-2" id="toc-header-2" class="nav-link" data-scroll-target="#header-2">header 2</a>
-  <ul class="collapse">
-  <li><a href="#header-3" id="toc-header-3" class="nav-link" data-scroll-target="#header-3">header 3</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#separate-blue-and-green-columns-and-join-based-on-day-and-dosage" id="toc-separate-blue-and-green-columns-and-join-based-on-day-and-dosage" class="nav-link" data-scroll-target="#separate-blue-and-green-columns-and-join-based-on-day-and-dosage">Separate Blue and Green columns and join based on day and dosage</a></li>
-  <li><a href="#join-green-and-blue-channel-images-together" id="toc-join-green-and-blue-channel-images-together" class="nav-link" data-scroll-target="#join-green-and-blue-channel-images-together">Join green and blue channel images together</a></li>
-  <li><a href="#calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi" id="toc-calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi" class="nav-link" data-scroll-target="#calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi">Calculate the percent of green area (yH2AX) normalized to the blue area (DAPI)</a></li>
-  <li><a href="#clean-data-and-get-rid-of-points-that-do-not-match-and-any-na-or-missing-values" id="toc-clean-data-and-get-rid-of-points-that-do-not-match-and-any-na-or-missing-values" class="nav-link" data-scroll-target="#clean-data-and-get-rid-of-points-that-do-not-match-and-any-na-or-missing-values">Clean data and get rid of points that do not match, and any NA or missing values</a></li>
-  <li><a href="#pick-colors-for-the-plot" id="toc-pick-colors-for-the-plot" class="nav-link" data-scroll-target="#pick-colors-for-the-plot">Pick colors for the plot</a></li>
-  <li><a href="#generate-a-combined-plot-with-each-timepoint-separated-by-color-dosage-on-x-axis-and-percent-of-coverage-yh2axdapi-on-the-y-axis" id="toc-generate-a-combined-plot-with-each-timepoint-separated-by-color-dosage-on-x-axis-and-percent-of-coverage-yh2axdapi-on-the-y-axis" class="nav-link" data-scroll-target="#generate-a-combined-plot-with-each-timepoint-separated-by-color-dosage-on-x-axis-and-percent-of-coverage-yh2axdapi-on-the-y-axis">Generate a combined plot with each timepoint separated by color, dosage on X axis and percent of coverage (yH2AX/DAPI) on the y axis</a></li>
-  <li><a href="#plot-the-individual-days-separately-to-access-dna-damage-by-dosage-more-clearly" id="toc-plot-the-individual-days-separately-to-access-dna-damage-by-dosage-more-clearly" class="nav-link" data-scroll-target="#plot-the-individual-days-separately-to-access-dna-damage-by-dosage-more-clearly">Plot the individual days separately to access DNA damage by dosage more clearly</a></li>
+  <li><a href="#read-in-all-of-the-csv-files" id="toc-read-in-all-of-the-csv-files" class="nav-link" data-scroll-target="#read-in-all-of-the-csv-files">Read in all of the CSV Files</a></li>
+  <li><a href="#use-file-names-to-pull-metadata" id="toc-use-file-names-to-pull-metadata" class="nav-link" data-scroll-target="#use-file-names-to-pull-metadata">Use File Names to Pull Metadata</a></li>
+  <li><a href="#separate-the-dataset-into-blue-and-green-channels" id="toc-separate-the-dataset-into-blue-and-green-channels" class="nav-link" data-scroll-target="#separate-the-dataset-into-blue-and-green-channels">Separate the Dataset into Blue and Green Channels</a></li>
+  <li><a href="#join-green-and-blue-channel-images-together" id="toc-join-green-and-blue-channel-images-together" class="nav-link" data-scroll-target="#join-green-and-blue-channel-images-together">Join Green and Blue Channel Images Together</a></li>
+  <li><a href="#calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi" id="toc-calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi" class="nav-link" data-scroll-target="#calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi">Calculate the Percent of Green area (yH2AX) normalized to the Blue area (DAPI)</a></li>
+  <li><a href="#clean-data" id="toc-clean-data" class="nav-link" data-scroll-target="#clean-data">Clean Data</a></li>
+  <li><a href="#pick-colors-for-the-plot" id="toc-pick-colors-for-the-plot" class="nav-link" data-scroll-target="#pick-colors-for-the-plot">Pick Colors for the Plot</a></li>
+  <li><a href="#generate-a-combined-plot-looking-at-the-percent-of-dna-damage-across-dosage-of-doxorubicin" id="toc-generate-a-combined-plot-looking-at-the-percent-of-dna-damage-across-dosage-of-doxorubicin" class="nav-link" data-scroll-target="#generate-a-combined-plot-looking-at-the-percent-of-dna-damage-across-dosage-of-doxorubicin">Generate a Combined Plot looking at the Percent of DNA Damage Across Dosage of Doxorubicin</a></li>
+  <li><a href="#plot-by-the-individual-days-separately" id="toc-plot-by-the-individual-days-separately" class="nav-link" data-scroll-target="#plot-by-the-individual-days-separately">Plot by the Individual Days Separately</a></li>
   </ul>
 </nav>
     </div>
@@ -210,26 +203,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="read-in-all-of-the-csv-files" class="level1">
-<h1>Read in all of the CSV files</h1>
+<h1>Read in all of the CSV Files</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_paths <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="read-all-of-the-data-into-1-tibble" class="level1">
-<h1>Read all of the data into 1 tibble</h1>
+<p>My variable here is “file_paths”. This variable will contain a list of file names that I have stored in my current working directory. The “list.files” function searches for files in that current working directory. The “pattern=(2 back slashes).csv$” argument will allow for only the files that end in “.csv” to be included in my “file_paths” variable. This is because in regular expressions, a period means “any character” so we have to escape that with 2 backslashes to match to a period. Because the filename ends after csv, I use a dollar sign at the end of the pattern to indicate that csv is the end of the string so it will only pull files that end in .csv, not just a file that contains .csv. I use the “full.names=TRUE” peice to return the entire file path instead of just the file name itself. # Read all of the .csv Files into one Dataset</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>all_data<span class="ot">&lt;-</span>file_paths <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(read_csv, <span class="at">.id =</span> <span class="st">"filename"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>My new variable here is “all_data”, which is where all of my file_paths are combined into one big data set. The file_paths%&gt;% will start with the list of the .csv file paths and allow them to be piped in the next function, “set_names()”. This allows R to know which row came from which file. The “map_dfr(read_csv,.id=filename)” Makes R read each csv file in the list and combine all of the files together into one data frame. In addition, R then adds a new column to the big data frame called “filename”.</p>
 </section>
-<section id="add-columns-and-define-base_name-to-help-join" class="level1">
-<h1>Add Columns and define base_name to help join</h1>
-<section id="header-2" class="level2">
-<h2 class="anchored" data-anchor-id="header-2">header 2</h2>
-<section id="header-3" class="level3">
-<h3 class="anchored" data-anchor-id="header-3">header 3</h3>
-<p>Sample text</p>
+<section id="use-file-names-to-pull-metadata" class="level1">
+<h1>Use File Names to Pull Metadata</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -252,11 +239,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>The “mutate()” function adds new columns to the big dataset by extracting the information from the filename column. The basename column uses only the dosage, sample ID, and timepoint to help join files together later. The timepoint is extracted from the filename and matches to patterns listed in the file name which in this case is “11d” for example. By using “case_when()” you can add a column for dosage by finding patterns like “0.1uM” or “no doxo” and defining what they mean. The channel column is based on the fluorescence color also pulled from the filename.</p>
 </section>
-</section>
-</section>
-<section id="separate-blue-and-green-columns-and-join-based-on-day-and-dosage" class="level1">
-<h1>Separate Blue and Green columns and join based on day and dosage</h1>
+<section id="separate-the-dataset-into-blue-and-green-channels" class="level1">
+<h1>Separate the Dataset into Blue and Green Channels</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>blue <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(channel <span class="sc">==</span> <span class="st">"blue"</span>) <span class="sc">%&gt;%</span></span>
@@ -268,22 +254,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(base_name, Count, <span class="st">`</span><span class="at">Total Area</span><span class="st">`</span>, <span class="st">`</span><span class="at">Average Size</span><span class="st">`</span>, <span class="st">`</span><span class="at">%Area</span><span class="st">`</span>, Mean) <span class="sc">%&gt;%</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">"_green"</span>), <span class="sc">-</span>base_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>This code split my dataset into two tables: one with images from the blue channel and one with images from the green channel. Then I rename the measurment columns with the appropriate channel name to help join them later.</p>
 </section>
 <section id="join-green-and-blue-channel-images-together" class="level1">
-<h1>Join green and blue channel images together</h1>
+<h1>Join Green and Blue Channel Images Together</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(blue, green, <span class="at">by =</span> <span class="st">"base_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>The “inner_join” function merges the blue and green data tables together based on their basename, which includes the dosage, timepoint, and sample ID. The joining of these two datasets is a new varibale called “combined”.</p>
 </section>
 <section id="calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi" class="level1">
-<h1>Calculate the percent of green area (yH2AX) normalized to the blue area (DAPI)</h1>
+<h1>Calculate the Percent of Green area (yH2AX) normalized to the Blue area (DAPI)</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> combined <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent_gammaH2AX =</span> (<span class="st">`</span><span class="at">%Area_green</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">%Area_blue</span><span class="st">`</span>) <span class="sc">*</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Here, I add a new column called “percent_gammaH2AX to the”combined” dataset using the “mutate()” function. This column will divide the precent of the green area (the yH2AX signal, which measures DNA damage) by the percent of the blue area (DAPI signal, which measures the total nuclei). I then multiply this by 100 to get a percentage which gives me the normalized value that gives me the percent of DNA damage relative to the number of cells.</p>
 </section>
-<section id="clean-data-and-get-rid-of-points-that-do-not-match-and-any-na-or-missing-values" class="level1">
-<h1>Clean data and get rid of points that do not match, and any NA or missing values</h1>
+<section id="clean-data" class="level1">
+<h1>Clean Data</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> combined <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dosage), <span class="sc">!</span><span class="fu">is.na</span>(percent_gammaH2AX), <span class="sc">!</span><span class="fu">is.na</span>(day)) <span class="sc">%&gt;%</span></span>
@@ -293,9 +282,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>In this step I remove any rows that do not have dosage, percent_gammaH2AX, or timepoints using “filter()”. Next, “mutate()” is used to convert the dosage and day columns into categorical variables and set them in ascending order. “droplevels” is then used to remove any dosage or day lables that were no longer used in my new filtered dataset.</p>
 </section>
 <section id="pick-colors-for-the-plot" class="level1">
-<h1>Pick colors for the plot</h1>
+<h1>Pick Colors for the Plot</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>box_fill <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3d"</span> <span class="ot">=</span> <span class="st">"#66c2a5"</span>,  <span class="co"># green</span></span>
@@ -304,9 +294,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"11d"</span> <span class="ot">=</span> <span class="st">"#e78ac3"</span>  <span class="co"># pink</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Here I made a variable called “box_fil” where each day is assigned to a specific color using the “c()” function.</p>
 </section>
-<section id="generate-a-combined-plot-with-each-timepoint-separated-by-color-dosage-on-x-axis-and-percent-of-coverage-yh2axdapi-on-the-y-axis" class="level1">
-<h1>Generate a combined plot with each timepoint separated by color, dosage on X axis and percent of coverage (yH2AX/DAPI) on the y axis</h1>
+<section id="generate-a-combined-plot-looking-at-the-percent-of-dna-damage-across-dosage-of-doxorubicin" class="level1">
+<h1>Generate a Combined Plot looking at the Percent of DNA Damage Across Dosage of Doxorubicin</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined, <span class="fu">aes</span>(<span class="at">x =</span> dosage, <span class="at">y =</span> percent_gammaH2AX, <span class="at">fill =</span> day)) <span class="sc">+</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">width =</span> <span class="fl">0.4</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
@@ -331,9 +322,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>In this step, I am ready to graph. The “ggplot()” function creates a box plot. The “aes()” function maps dosage to the x axis and percent_gammaH2AX to the y axis and the boxes are filled based on their corresponding “box_fill” color. The “geom_boxplot()” function shoes the distribution f the values in each group and “geom_jitter() allows me to add the individual values. To make the individual points a darker color than their corresponding box_fill, I use”scale_fill_manual()” and “scale_color_manual()”. “labs()” allows me to name my title and axis lables. I used the “theme_minimal()”function to keep the plot clean and simple.</p>
 </section>
-<section id="plot-the-individual-days-separately-to-access-dna-damage-by-dosage-more-clearly" class="level1">
-<h1>Plot the individual days separately to access DNA damage by dosage more clearly</h1>
+<section id="plot-by-the-individual-days-separately" class="level1">
+<h1>Plot by the Individual Days Separately</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_day <span class="ot">&lt;-</span> <span class="cf">function</span>(day_label) {</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  combined <span class="sc">%&gt;%</span></span>
@@ -349,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage:</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_day</span>(<span class="st">"3d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -383,6 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>In this final step, I wrote a funciton called “plot_day()”. I then use the argument, “day_label” to create a boxplot showing DNA damage across Doxorubicin treatments on that specific day. this filters the combined dataset to only include rows matching the day.</p>
 
 
 </section>
