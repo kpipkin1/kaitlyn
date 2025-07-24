@@ -145,7 +145,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#set-the-working-directory" id="toc-set-the-working-directory" class="nav-link active" data-scroll-target="#set-the-working-directory">Set the working directory</a></li>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a></li>
+  <li><a href="#set-the-working-directory" id="toc-set-the-working-directory" class="nav-link" data-scroll-target="#set-the-working-directory">Set the working directory</a></li>
   <li><a href="#load-the-necessary-libraries" id="toc-load-the-necessary-libraries" class="nav-link" data-scroll-target="#load-the-necessary-libraries">Load the necessary libraries</a></li>
   <li><a href="#read-in-all-of-the-csv-files" id="toc-read-in-all-of-the-csv-files" class="nav-link" data-scroll-target="#read-in-all-of-the-csv-files">Read in all of the CSV Files</a></li>
   <li><a href="#use-file-names-to-pull-metadata" id="toc-use-file-names-to-pull-metadata" class="nav-link" data-scroll-target="#use-file-names-to-pull-metadata">Use File Names to Pull Metadata</a></li>
@@ -187,6 +188,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="project-overview" class="level1">
+<h1>Project Overview</h1>
+<p>The goal of this project is to assess the extent of DNA damage in vascular smooth muscle cells (VSMCs) following treatment with Doxorubicin. I will be using a data set that consists of 96 CSV files generated from ImageJ analysis. Each sample includes two channels: the DAPI (blue) channel, which stains cell nuclei, and the γH2AX (green) channel, an established marker of DNA damage. VSMCs were treated with Doxorubicin at four time points: days 3, 4, 7, and 11. VSMCs were also treated at different concentrations of Doxorubicin: 0 μM, 0.1 μM, 0.2 μM, and 0.4 μM. This study aims to determine the percentage of γH2AX signal normalized to nuclear area across different conditions to determine if there is any impact from dosage and duration on DNA damage.</p>
+</section>
 <section id="set-the-working-directory" class="level1">
 <h1>Set the working directory</h1>
 <div class="cell">
@@ -196,10 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-the-necessary-libraries" class="level1">
 <h1>Load the necessary libraries</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr) </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="read-in-all-of-the-csv-files" class="level1">
@@ -207,13 +209,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_paths <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>My variable here is “file_paths”. This variable will contain a list of file names that I have stored in my current working directory. The “list.files” function searches for files in that current working directory. The “pattern=(2 back slashes).csv$” argument will allow for only the files that end in “.csv” to be included in my “file_paths” variable. This is because in regular expressions, a period means “any character” so we have to escape that with 2 backslashes to match to a period. Because the filename ends after csv, I use a dollar sign at the end of the pattern to indicate that csv is the end of the string so it will only pull files that end in .csv, not just a file that contains .csv. I use the “full.names=TRUE” peice to return the entire file path instead of just the file name itself. # Read all of the .csv Files into one Dataset</p>
+<p>In this code chunk, I am using Base R. My variable here is “file_paths”. This variable will contain a list of file names that I have stored in my current working directory. The “list.files” function searches for files in that current working directory. The “pattern=(2 back slashes).csv$” argument will allow for only the files that end in “.csv” to be included in my “file_paths” variable. This is because in regular expressions, a period means “any character” so we have to escape that with 2 backslashes to match to a period. Because the filename ends after csv, I use a dollar sign at the end of the pattern to indicate that csv is the end of the string so it will only pull files that end in .csv, not just a file that contains .csv. I use the “full.names=TRUE” peice to return the entire file path instead of just the file name itself. # Read all of the .csv Files into one Dataset</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>all_data<span class="ot">&lt;-</span>file_paths <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(read_csv, <span class="at">.id =</span> <span class="st">"filename"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>My new variable here is “all_data”, which is where all of my file_paths are combined into one big data set. The file_paths%&gt;% will start with the list of the .csv file paths and allow them to be piped in the next function, “set_names()”. This allows R to know which row came from which file. The “map_dfr(read_csv,.id=filename)” Makes R read each csv file in the list and combine all of the files together into one data frame. In addition, R then adds a new column to the big data frame called “filename”.</p>
+<p>My new variable here is “all_data”, which is where all of my file_paths are combined into one big data set. The file_paths%&gt;% will start with the list of the .csv file paths and allow them to be piped in the next function, “set_names()”. This allows R to know which row came from which file. The “map_dfr(read_csv,.id=filename)” Makes R read each csv file in the list and combine all of the files together into one data frame. In addition, R then adds a new column to the big data frame called “filename”.The map_dfr function is from a package in tidyverse called purrr. dfr means data frame row bind.</p>
 </section>
 <section id="use-file-names-to-pull-metadata" class="level1">
 <h1>Use File Names to Pull Metadata</h1>
@@ -239,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The “mutate()” function adds new columns to the big dataset by extracting the information from the filename column. The basename column uses only the dosage, sample ID, and timepoint to help join files together later. The timepoint is extracted from the filename and matches to patterns listed in the file name which in this case is “11d” for example. By using “case_when()” you can add a column for dosage by finding patterns like “0.1uM” or “no doxo” and defining what they mean. The channel column is based on the fluorescence color also pulled from the filename.</p>
+<p>The “mutate()” function adds new columns to the big dataset by extracting the information from the filename column. The basename column uses only the dosage, sample ID, and timepoint to help join files together later. The timepoint is extracted from the filename and matches to patterns listed in the file name which in this case is “11d” for example. By using “case_when()” you can add a column for dosage by finding patterns like “0.1uM” or “no doxo” and defining what they mean. The channel column is based on the fluorescence color also pulled from the filename. Both the mutate and case_when functions are from packages in tidyverse called dplyr and stringr.</p>
 </section>
 <section id="separate-the-dataset-into-blue-and-green-channels" class="level1">
 <h1>Separate the Dataset into Blue and Green Channels</h1>
@@ -254,14 +256,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(base_name, Count, <span class="st">`</span><span class="at">Total Area</span><span class="st">`</span>, <span class="st">`</span><span class="at">Average Size</span><span class="st">`</span>, <span class="st">`</span><span class="at">%Area</span><span class="st">`</span>, Mean) <span class="sc">%&gt;%</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">"_green"</span>), <span class="sc">-</span>base_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This code split my dataset into two tables: one with images from the blue channel and one with images from the green channel. Then I rename the measurment columns with the appropriate channel name to help join them later.</p>
+<p>This code split my dataset into two tables: one with images from the blue channel and one with images from the green channel. Then I rename the measurment columns with the appropriate channel name to help join them later. The filter and rename_with functions are both from packages in tidyverse called dplyr.</p>
 </section>
 <section id="join-green-and-blue-channel-images-together" class="level1">
 <h1>Join Green and Blue Channel Images Together</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(blue, green, <span class="at">by =</span> <span class="st">"base_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The “inner_join” function merges the blue and green data tables together based on their basename, which includes the dosage, timepoint, and sample ID. The joining of these two datasets is a new varibale called “combined”.</p>
+<p>The “inner_join” function merges the blue and green data tables together based on their basename, which includes the dosage, timepoint, and sample ID. This function is from the dplyr package in tidyverse. The joining of these two datasets is a new varibale called “combined”.</p>
 </section>
 <section id="calculate-the-percent-of-green-area-yh2ax-normalized-to-the-blue-area-dapi" class="level1">
 <h1>Calculate the Percent of Green area (yH2AX) normalized to the Blue area (DAPI)</h1>
@@ -282,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this step I remove any rows that do not have dosage, percent_gammaH2AX, or timepoints using “filter()”. Next, “mutate()” is used to convert the dosage and day columns into categorical variables and set them in ascending order. “droplevels” is then used to remove any dosage or day lables that were no longer used in my new filtered dataset.</p>
+<p>In this step I remove any rows that do not have dosage, percent_gammaH2AX, or timepoints using “filter()”. Next, “mutate()” is used to convert the dosage and day columns into categorical variables and set them in ascending order. “droplevels” is then used to remove any dosage or day lables that were no longer used in my new filtered dataset. Drop levels, is.na, and factor are all functions in base R.</p>
 </section>
 <section id="pick-colors-for-the-plot" class="level1">
 <h1>Pick Colors for the Plot</h1>
@@ -308,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> box_fill) <span class="sc">+</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Assessing Dose- and Time-Dependent DNA Damage in VSMCs Following Doxorubicin Treatment"</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Doxorubicin Dose"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Doxorubicin Dose (uM)"</span>,</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"% γH2AX / % DAPI"</span>,</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Day"</span>,</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Day"</span></span>
@@ -322,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>In this step, I am ready to graph. The “ggplot()” function creates a box plot. The “aes()” function maps dosage to the x axis and percent_gammaH2AX to the y axis and the boxes are filled based on their corresponding “box_fill” color. The “geom_boxplot()” function shoes the distribution f the values in each group and “geom_jitter() allows me to add the individual values. To make the individual points a darker color than their corresponding box_fill, I use”scale_fill_manual()” and “scale_color_manual()”. “labs()” allows me to name my title and axis lables. I used the “theme_minimal()”function to keep the plot clean and simple.</p>
+<p>In this step, I am ready to graph so I will use the ggplot2 package in tidyverse. The “ggplot()” function creates a box plot. The “aes()” function maps dosage to the x axis and percent_gammaH2AX to the y axis and the boxes are filled based on their corresponding “box_fill” color. The “geom_boxplot()” function shoes the distribution f the values in each group and “geom_jitter() allows me to add the individual values. To make the individual points a darker color than their corresponding box_fill, I use”scale_fill_manual()” and “scale_color_manual()”. “labs()” allows me to name my title and axis lables. I used the “theme_minimal()”function to keep the plot clean and simple.</p>
 </section>
 <section id="plot-by-the-individual-days-separately" class="level1">
 <h1>Plot by the Individual Days Separately</h1>
@@ -335,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_jitter</span>(<span class="at">color =</span> box_fill[day_label], <span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Dose-Dependent DNA Damage in VSMCs on"</span>, day_label),</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Doxorubicin Dose"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Doxorubicin Dose (uM)"</span>,</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"% γH2AX / % DAPI"</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
@@ -375,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>In this final step, I wrote a funciton called “plot_day()”. I then use the argument, “day_label” to create a boxplot showing DNA damage across Doxorubicin treatments on that specific day. this filters the combined dataset to only include rows matching the day.</p>
+<p>In this final step, I wrote a function called “plot_day()”. I then use the argument, “day_label” to create a boxplot showing DNA damage across Doxorubicin treatments on that specific day. this filters the combined data set to only include rows matching the day.</p>
 
 
 </section>
