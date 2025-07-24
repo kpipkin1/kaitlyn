@@ -6,6 +6,20 @@ editor:
     wrap: 72
 ---
 
+# Project Overview
+
+The goal of this project is to assess the extent of DNA damage in
+vascular smooth muscle cells (VSMCs) following treatment with
+Doxorubicin. I will be using a data set that consists of 96 CSV files
+generated from ImageJ analysis. Each sample includes two channels: the
+DAPI (blue) channel, which stains cell nuclei, and the γH2AX (green)
+channel, an established marker of DNA damage. VSMCs were treated with
+Doxorubicin at four time points: days 3, 4, 7, and 11. VSMCs were also
+treated at different concentrations of Doxorubicin: 0 μM, 0.1 μM, 0.2
+μM, and 0.4 μM. This study aims to determine the percentage of γH2AX
+signal normalized to nuclear area across different conditions to
+determine if there is any impact from dosage and duration on DNA damage.
+
 # Set the working directory
 
 ```{r}
@@ -18,9 +32,7 @@ editor:
 #| message: false
 
 library(tidyverse) 
-library(readr) 
-library(ggplot2) 
-library(stringr) 
+library(gt)
 
 ```
 
@@ -29,8 +41,20 @@ library(stringr)
 ```{r}
 file_paths <- list.files(pattern = "\\.csv$", full.names = TRUE)
 ```
-My variable here is "file_paths". This variable will contain a list of file names that I have stored in my current working directory. The "list.files" function searches for files in that current working directory. The "pattern=(2 back slashes).csv$" argument will allow for only the files that end in ".csv" to be included in my "file_paths" variable. This is because in regular expressions, a period means "any character" so we have to escape that with 2 backslashes to match to a period. Because the filename ends after csv, I use a dollar sign at the end of the pattern to indicate that csv is the end of the string so it will only pull files that end in .csv, not just a file that contains .csv. I use the "full.names=TRUE" peice to return the entire file path instead of just the file name itself. 
-# Read all of the .csv Files into one Dataset
+
+In this code chunk, I am using Base R. My variable here is "file_paths".
+This variable will contain a list of file names that I have stored in my
+current working directory. The "list.files" function searches for files
+in that current working directory. The "pattern=(2 back slashes).csv\$"
+argument will allow for only the files that end in ".csv" to be included
+in my "file_paths" variable. This is because in regular expressions, a
+period means "any character" so we have to escape that with 2
+backslashes to match to a period. Because the filename ends after csv, I
+use a dollar sign at the end of the pattern to indicate that csv is the
+end of the string so it will only pull files that end in .csv, not just
+a file that contains .csv. I use the "full.names=TRUE" peice to return
+the entire file path instead of just the file name itself. \# Read all
+of the .csv Files into one Dataset
 
 ```{r}
 #| message: false
@@ -40,7 +64,16 @@ all_data<-file_paths %>%
   map_dfr(read_csv, .id = "filename")
 
 ```
-My new variable here is "all_data", which is where all of my file_paths are combined into one big data set. The file_paths%>% will start with the list of the .csv file paths and allow them to be piped in the next function, "set_names()". This allows R to know which row came from which file. The "map_dfr(read_csv,.id=filename)" Makes R read each csv file in the list and combine all of the files together into one data frame. In addition, R then adds a new column to the big data frame called "filename".  
+
+My new variable here is "all_data", which is where all of my file_paths
+are combined into one big data set. The file_paths%\>% will start with
+the list of the .csv file paths and allow them to be piped in the next
+function, "set_names()". This allows R to know which row came from which
+file. The "map_dfr(read_csv,.id=filename)" Makes R read each csv file in
+the list and combine all of the files together into one data frame. In
+addition, R then adds a new column to the big data frame called
+"filename".The map_dfr function is from a package in tidyverse called
+purrr. dfr means data frame row bind.
 
 # Use File Names to Pull Metadata
 
@@ -69,7 +102,16 @@ all_data <- all_data %>%
 
 ```
 
-The "mutate()" function adds new columns to the big dataset by extracting the information from the filename column. The basename column uses only the dosage, sample ID, and timepoint to help join files together later. The timepoint is extracted from the filename and matches to patterns listed in the file name which in this case is "11d" for example. By using "case_when()" you can add a column for dosage by finding patterns like "0.1uM" or "no doxo" and defining what they mean. The channel column is based on the fluorescence color also pulled from the filename. 
+The "mutate()" function adds new columns to the big dataset by
+extracting the information from the filename column. The basename column
+uses only the dosage, sample ID, and timepoint to help join files
+together later. The timepoint is extracted from the filename and matches
+to patterns listed in the file name which in this case is "11d" for
+example. By using "case_when()" you can add a column for dosage by
+finding patterns like "0.1uM" or "no doxo" and defining what they mean.
+The channel column is based on the fluorescence color also pulled from
+the filename. Both the mutate and case_when functions are from packages
+in tidyverse called dplyr and stringr.
 
 # Separate the Dataset into Blue and Green Channels
 
@@ -86,7 +128,11 @@ green <- all_data %>%
 
 ```
 
-This code split my dataset into two tables: one with images from the blue channel and one with images from the green channel. Then I rename the measurment columns with the appropriate channel name to help join them later.  
+This code split my dataset into two tables: one with images from the
+blue channel and one with images from the green channel. Then I rename
+the measurment columns with the appropriate channel name to help join
+them later. The filter and rename_with functions are both from packages
+in tidyverse called dplyr.
 
 # Join Green and Blue Channel Images Together
 
@@ -95,7 +141,10 @@ combined <- inner_join(blue, green, by = "base_name")
 
 ```
 
-The "inner_join" function merges the blue and green data tables together based on their basename, which includes the dosage, timepoint, and sample ID. The joining of these two datasets is a new varibale called "combined".
+The "inner_join" function merges the blue and green data tables together
+based on their basename, which includes the dosage, timepoint, and
+sample ID. This function is from the dplyr package in tidyverse. The
+joining of these two datasets is a new varibale called "combined".
 
 # Calculate the Percent of Green area (yH2AX) normalized to the Blue area (DAPI)
 
@@ -105,7 +154,13 @@ combined <- combined %>%
 
 ```
 
-Here, I add a new column called "percent_gammaH2AX to the "combined" dataset using the "mutate()" function. This column will divide the precent of the green area (the yH2AX signal, which measures DNA damage) by the percent of the blue area (DAPI signal, which measures the total nuclei). I then multiply this by 100 to get a percentage which gives me the normalized value that gives me the percent of DNA damage relative to the number of cells.  
+Here, I add a new column called "percent_gammaH2AX to the "combined"
+dataset using the "mutate()" function. This column will divide the
+precent of the green area (the yH2AX signal, which measures DNA damage)
+by the percent of the blue area (DAPI signal, which measures the total
+nuclei). I then multiply this by 100 to get a percentage which gives me
+the normalized value that gives me the percent of DNA damage relative to
+the number of cells.
 
 # Clean Data
 
@@ -119,7 +174,12 @@ combined <- combined %>%
   droplevels()
 ```
 
-In this step I remove any rows that do not have dosage, percent_gammaH2AX, or timepoints using "filter()". Next, "mutate()" is used to convert the dosage and day columns into categorical variables and set them in ascending order. "droplevels" is then used to remove any dosage or day lables that were no longer used in my new filtered dataset. 
+In this step I remove any rows that do not have dosage,
+percent_gammaH2AX, or timepoints using "filter()". Next, "mutate()" is
+used to convert the dosage and day columns into categorical variables
+and set them in ascending order. "droplevels" is then used to remove any
+dosage or day lables that were no longer used in my new filtered
+dataset. Drop levels, is.na, and factor are all functions in base R.
 
 # Pick Colors for the Plot
 
@@ -132,7 +192,8 @@ box_fill <- c(
 )
 ```
 
-Here I made a variable called "box_fil" where each day is assigned to a specific color using the "c()" function.
+Here I made a variable called "box_fil" where each day is assigned to a
+specific color using the "c()" function.
 
 # Generate a Combined Plot looking at the Percent of DNA Damage Across Dosage of Doxorubicin
 
@@ -146,7 +207,7 @@ ggplot(combined, aes(x = dosage, y = percent_gammaH2AX, fill = day)) +
   scale_color_manual(values = box_fill) +
   labs(
     title = "Assessing Dose- and Time-Dependent DNA Damage in VSMCs Following Doxorubicin Treatment",
-    x = "Doxorubicin Dose",
+    x = "Doxorubicin Dose (uM)",
     y = "% γH2AX / % DAPI",
     fill = "Day",
     color = "Day"
@@ -155,9 +216,18 @@ ggplot(combined, aes(x = dosage, y = percent_gammaH2AX, fill = day)) +
 
 ```
 
-In this step, I am ready to graph. The "ggplot()" function creates a box plot. The "aes()" function maps dosage to the x axis and percent_gammaH2AX to the y axis and the boxes are filled based on their corresponding "box_fill" color. The "geom_boxplot()" function shoes the distribution f the values in each group and "geom_jitter() allows me to add the individual values. To make the individual points a darker color than their corresponding box_fill, I use "scale_fill_manual()" and "scale_color_manual()". "labs()" allows me to name my title and axis lables. I used the "theme_minimal()"function to keep the plot clean and simple. 
+In this step, I am ready to graph so I will use the ggplot2 package in
+tidyverse. The "ggplot()" function creates a box plot. The "aes()"
+function maps dosage to the x axis and percent_gammaH2AX to the y axis
+and the boxes are filled based on their corresponding "box_fill" color.
+The "geom_boxplot()" function shoes the distribution f the values in
+each group and "geom_jitter() allows me to add the individual values. To
+make the individual points a darker color than their corresponding
+box_fill, I use "scale_fill_manual()" and "scale_color_manual()".
+"labs()" allows me to name my title and axis lables. I used the
+"theme_minimal()"function to keep the plot clean and simple.
 
-# Plot by the Individual Days Separately 
+# Plot by the Individual Days Separately
 
 ```{r}
 plot_day <- function(day_label) {
@@ -168,7 +238,7 @@ plot_day <- function(day_label) {
     geom_jitter(color = box_fill[day_label], width = 0.15, size = 2, alpha = 0.8) +
     labs(
       title = paste("Dose-Dependent DNA Damage in VSMCs on", day_label),
-      x = "Doxorubicin Dose",
+      x = "Doxorubicin Dose (uM)",
       y = "% γH2AX / % DAPI"
     ) +
     theme_minimal()
@@ -182,4 +252,22 @@ plot_day("11d")
 
 ```
 
-In this final step, I wrote a funciton called "plot_day()". I then use the argument, "day_label" to create a boxplot showing DNA damage across Doxorubicin treatments on that specific day. this filters the combined dataset to only include rows matching the day.
+In this step I wrote a function called "plot_day()". I then use the
+argument, "day_label" to create a boxplot showing DNA damage across
+Doxorubicin treatments on that specific day. this filters the combined
+data set to only include rows matching the day.
+
+# Make a Table of the Data set
+
+```{r}
+combined %>%
+  gt() %>%
+  tab_header(
+    title = "DNA Damage in VSMCs",
+    subtitle = "% γH2AX / % DAPI by Doxorubicin Dose and Timepoint"
+  )
+```
+
+In this final step, I am using the gt package to make a table of all of
+the combined data and analysis that I performed in all of the previous
+steps.
