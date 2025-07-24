@@ -53,7 +53,9 @@ use a dollar sign at the end of the pattern to indicate that csv is the
 end of the string so it will only pull files that end in .csv, not just
 a file that contains .csv. I use the "full.names=TRUE" peice to return
 the entire file path instead of just the file name itself. \# Read all
-of the .csv Files into one Dataset
+of the .csv Files into one Data set
+
+# Read all Files into one Data Set
 
 ```{r}
 #| message: false
@@ -112,7 +114,7 @@ The channel column is based on the fluorescence color also pulled from
 the filename. Both the mutate and case_when functions are from packages
 in tidyverse called dplyr and stringr.
 
-# Separate the Dataset into Blue and Green Channels
+# Separate the Data set into Blue and Green Channels
 
 ```{r}
 blue <- all_data %>%
