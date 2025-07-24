@@ -32,7 +32,6 @@ determine if there is any impact from dosage and duration on DNA damage.
 #| message: false
 
 library(tidyverse) 
-library(gt)
 
 ```
 
@@ -252,22 +251,7 @@ plot_day("11d")
 
 ```
 
-In this step I wrote a function called "plot_day()". I then use the
-argument, "day_label" to create a boxplot showing DNA damage across
+In this final step, I wrote a function called "plot_day()". I then use
+the argument, "day_label" to create a boxplot showing DNA damage across
 Doxorubicin treatments on that specific day. this filters the combined
 data set to only include rows matching the day.
-
-# Make a Table of the Data set
-
-```{r}
-combined %>%
-  gt() %>%
-  tab_header(
-    title = "DNA Damage in VSMCs",
-    subtitle = "% γH2AX / % DAPI by Doxorubicin Dose and Timepoint"
-  )
-```
-
-In this final step, I am using the gt package to make a table of all of
-the combined data and analysis that I performed in all of the previous
-steps.
